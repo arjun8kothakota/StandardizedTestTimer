@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.arjunkothakota.standardizedtesttimer">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Sat.ReadingActivity" />
+        <activity android:name=".Act.ActReading" />
+        <activity android:name=".SubjectSat.SubjectSatActivity" />
+        <activity android:name=".PreviewActivity" />
+        <activity android:name=".Sat.WritingActivity" />
+        <activity android:name=".Sat.MathNoCalcActivity" />
+        <activity android:name=".Sat.MathCalcActivity" />
+        <activity android:name=".Sat.EssayActivity" />
+        <activity android:name=".Act.ActEnglish" />
+        <activity android:name=".Act.ActMath" />
+        <activity android:name=".Act.ActScience" />
+        <activity android:name=".Act.ActWriting" />
+        <activity android:name=".SubjectSat.TestsActivity" />
+        <activity
+            android:name=".Home.HomePage"
+            android:label="@string/title_activity_home_page"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".BreakActivity"></activity>
+    </application>
+
+</manifest>
