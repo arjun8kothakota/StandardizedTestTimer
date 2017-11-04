@@ -46,7 +46,6 @@ public class PreviewActivity extends AppCompatActivity {
         final TextView textView =(TextView) findViewById(R.id.textView5);
         final TextView textView1 = (TextView) findViewById(R.id.textView4);
 
-        final String testTitle = getIntent().getStringExtra(MainActivity.EXTRA_ITEM_TITLE);
         layout = (RelativeLayout) findViewById(R.id.layout);
 
         startButton.setVisibility(View.INVISIBLE);
@@ -78,7 +77,20 @@ public class PreviewActivity extends AppCompatActivity {
                     noEssayButton.setVisibility(View.INVISIBLE);
                     startButton.setVisibility(View.VISIBLE);
 
-                    layout.setBackgroundResource(R.drawable.sat);
+                    section1.setVisibility(View.VISIBLE);
+                    section2.setVisibility(View.VISIBLE);
+                    section3.setVisibility(View.VISIBLE);
+                    section3.setVisibility(View.VISIBLE);
+                    section4.setVisibility(View.VISIBLE);
+                    section5.setVisibility(View.VISIBLE);
+
+                    section1Time.setVisibility(View.VISIBLE);
+                    section2Time.setVisibility(View.VISIBLE);
+                    section3Time.setVisibility(View.VISIBLE);
+                    section4Time.setVisibility(View.VISIBLE);
+                    section5Time.setVisibility(View.VISIBLE);
+
+                    satOrAct.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -121,15 +133,15 @@ public class PreviewActivity extends AppCompatActivity {
 
         }else if (textView1.getText() == ""){
 
-            essayButton.setBackgroundColor(Color.parseColor("#5ae350"));
-            noEssayButton.setBackgroundColor(Color.parseColor("#5ae350"));
-            startButton.setBackgroundColor(Color.parseColor("#5ae350"));
-            satOrAct.setBackgroundColor(Color.parseColor("#5ae350"));
-            section1.setBackgroundColor(Color.parseColor("#5ae350"));
-            section2.setBackgroundColor(Color.parseColor("#5ae350"));
-            section3.setBackgroundColor(Color.parseColor("#5ae350"));
-            section4.setBackgroundColor(Color.parseColor("#5ae350"));
-            section5.setBackgroundColor(Color.parseColor("#5ae350"));
+            essayButton.setBackgroundColor(Color.parseColor("#47cbad"));
+            noEssayButton.setBackgroundColor(Color.parseColor("#47cbad"));
+            startButton.setBackgroundColor(Color.parseColor("#47cbad"));
+            satOrAct.setBackgroundColor(Color.parseColor("#47cbad"));
+            section1.setBackgroundColor(Color.parseColor("#47cbad"));
+            section2.setBackgroundColor(Color.parseColor("#47cbad"));
+            section3.setBackgroundColor(Color.parseColor("#47cbad"));
+            section4.setBackgroundColor(Color.parseColor("#47cbad"));
+            section5.setBackgroundColor(Color.parseColor("#47cbad"));
 
             section1.setText("English");
             section2.setText("Math");
@@ -205,7 +217,7 @@ public class PreviewActivity extends AppCompatActivity {
                 }
             });
 
-        }else if (testTitle.equalsIgnoreCase(MainActivity.SUBJECT_SAT_TEST)){
+        }else{
             Intent intent = new Intent(PreviewActivity.this, TestsActivity.class);
             startActivity(intent);
         }

@@ -165,11 +165,11 @@ public class MathNoCalcActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (textView.getText() == string) {
-                                    Intent intent = new Intent(MathNoCalcActivity.this, MathCalcActivity.class);
+                                    Intent intent = new Intent(MathNoCalcActivity.this, SatBreak2.class);
                                     intent.putExtra("noessay", string);
                                     startActivity(intent);
                                 }else {
-                                    Intent intent = new Intent(MathNoCalcActivity.this, MathCalcActivity.class);
+                                    Intent intent = new Intent(MathNoCalcActivity.this, SatBreak2.class);
                                     startActivity(intent);
                                 }
                             }

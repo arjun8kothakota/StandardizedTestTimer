@@ -196,10 +196,10 @@ public class ReadingActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (textView.getText() == "") {
-                                    Intent intent = new Intent(ReadingActivity.this, WritingActivity.class);
+                                    Intent intent = new Intent(ReadingActivity.this, SatBreak1.class);
                                     startActivity(intent);
                                 }else {
-                                    Intent intent = new Intent(ReadingActivity.this, WritingActivity.class);
+                                    Intent intent = new Intent(ReadingActivity.this, SatBreak1.class);
                                     intent.putExtra("noessay", string);
                                     startActivity(intent);
                                 }

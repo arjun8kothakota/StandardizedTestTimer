@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.arjunkothakota.standardizedtesttimer.Home.HomePage;
-import com.example.arjunkothakota.standardizedtesttimer.MainActivity;
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
 import java.util.concurrent.TimeUnit;
@@ -183,7 +182,7 @@ public class SubjectSatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(SubjectSatActivity.this, MainActivity.class);
+        Intent intent = new Intent(SubjectSatActivity.this, HomePage.class);
         startActivity(intent);
     }
 

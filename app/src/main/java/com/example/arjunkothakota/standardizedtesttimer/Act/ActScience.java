@@ -191,7 +191,7 @@ public class ActScience extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(ActScience.this, ActWriting.class);
+                                    Intent intent = new Intent(ActScience.this, ActBreak2.class);
                                     startActivity(intent);
                                 }
                             }).setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -33,7 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BreakActivity"></activity>
+        <activity android:name=".Act.ActBreak1" />
+        <activity android:name=".Act.ActBreak2" />
+        <activity android:name=".Sat.SatBreak1" />
+        <activity android:name=".Sat.SatBreak2"></activity>
     </application>
 
 </manifest>

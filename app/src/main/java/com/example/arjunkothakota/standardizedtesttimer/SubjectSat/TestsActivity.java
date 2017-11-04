@@ -20,7 +20,7 @@ public class TestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
 
-        String[] tests = {"Math Level 1", "Math Level 2", "Physics", "Chemistry", "Literature", "History", "World History", "Biology", "Chinese", "French", "German", "Modern Hebrew", "Italian", "Japanese", "Korean", "Latin", "Spanish"};
+        String[] tests = {"Literature", "U.S. History", "World History", "Mathematics Level 1", "Mathematics Level 2", "Biology E/M", "Chemistry", "Physics", "French", "Spanish", "German", "Chinese", "Japanese", "Latin", "Modern Hebrew", "Italian"};
 
         ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tests);
         testsListView = (ListView) findViewById(R.id.testListView);
