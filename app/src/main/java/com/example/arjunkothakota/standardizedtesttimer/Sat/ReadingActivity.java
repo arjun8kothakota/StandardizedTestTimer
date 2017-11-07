@@ -54,7 +54,7 @@ public class ReadingActivity extends AppCompatActivity {
         textView.setText(string);
         textView.setVisibility(View.INVISIBLE);
 
-        timeTxt.setText("00:10");
+        timeTxt.setText("65:00");
 
         stopButton.setEnabled(false);
 

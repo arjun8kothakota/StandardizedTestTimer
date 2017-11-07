@@ -54,6 +54,7 @@
         android:gravity="center"
         android:text="You now have a break! Take a quick breather.
 
+
 If you are ready beforehand, press the
 button to carry on to the next section."
         android:textColor="#000000"
