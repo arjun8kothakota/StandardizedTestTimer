@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.arjunkothakota.standardizedtesttimer.Home.HomePage;
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
@@ -29,6 +34,8 @@ public class ActEnglish extends AppCompatActivity {
     private long remainingTime = 0;
     private int startClickCount;
     int i = 0;
+
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,7 @@ public class ActEnglish extends AppCompatActivity {
                 startClickCount++;
                 if (startClickCount % 2 == 1) {
 
-                    startButton.setText("Restart");
+                    startButton.setText("Reset");
                     stopButton.setEnabled(true);
 
                 }
@@ -127,7 +134,7 @@ public class ActEnglish extends AppCompatActivity {
 
                     if (startClickCount%2 == 1){
 
-                        startButton.setText("Restart");
+                        startButton.setText("Reset");
                         stopButton.setEnabled(true);
 
                     }
@@ -159,7 +166,7 @@ public class ActEnglish extends AppCompatActivity {
 
                                 cancel();
 
-                            }else {
+                            }if (isPaused == false){
 
                                 i++;
                                 String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
@@ -187,13 +194,15 @@ public class ActEnglish extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActEnglish.this);
                 alertDialogBuilder
-                        .setMessage("Are you sure you want to move to the next section")
+                        .setMessage("Are you sure you want to move to the next section?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                isPaused = true;
                                 if (textView.getText() == "") {
                                     Intent intent = new Intent(ActEnglish.this, ActMath.class);
                                     startActivity(intent);
@@ -217,20 +226,71 @@ public class ActEnglish extends AppCompatActivity {
 
     public void playAlarm(){
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.wdta);
+        final String string = getIntent().getStringExtra("noessay");
+        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.alarmsound);
 
         mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                mediaPlayer.stop();
+            }
+        };
+//Task for timer to execute when time expires
+        class SleepTask extends TimerTask {
+            @Override
+            public void run(){
+                handler.sendEmptyMessage(0);
+            }
+        }
+
+        Timer timer = new Timer("timer",true);
+        timer.schedule(new SleepTask(),10000);
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActEnglish.this);
         alertDialogBuilder
-                .setMessage("Time's Up!")
+                .setMessage("Time's Up! Move to the next section.")
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (textView.getText() == "") {
+                            Intent intent = new Intent(ActEnglish.this, ActMath.class);
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(ActEnglish.this, ActMath.class);
+                            intent.putExtra("noessay", string);
+                            startActivity(intent);
+                        }
                         mediaPlayer.stop();
-                        dialog.cancel();
                     }
                 });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActEnglish.this);
+        alertDialogBuilder
+                .setMessage("Do you want to quit the test?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        isPaused = true;
+                        Intent intent = new Intent(ActEnglish.this, HomePage.class);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

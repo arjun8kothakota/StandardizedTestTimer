@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.arjunkothakota.standardizedtesttimer.Home.HomePage;
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
 public class TestsActivity extends AppCompatActivity {
@@ -34,5 +35,12 @@ public class TestsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(TestsActivity.this, HomePage.class);
+        startActivity(intent);
     }
 }

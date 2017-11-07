@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.arjunkothakota.standardizedtesttimer.Home.HomePage;
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
@@ -60,7 +65,7 @@ public class ReadingActivity extends AppCompatActivity {
                 startClickCount++;
                 if (startClickCount % 2 == 1) {
 
-                    startButton.setText("Restart");
+                    startButton.setText("Reset");
                     stopButton.setEnabled(true);
 
                 }
@@ -68,7 +73,7 @@ public class ReadingActivity extends AppCompatActivity {
                 isPaused = false;
                 isCancelled = false;
 
-                final long millisInFuture = 10000;
+                final long millisInFuture = 3900000;
                 long countDownInterval = 1000;
                 new CountDownTimer(millisInFuture, countDownInterval) {
                     @Override
@@ -94,12 +99,12 @@ public class ReadingActivity extends AppCompatActivity {
 
                             cancel();
 
-                        } else {
+                        }else {
 
                             i++;
                             String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished), TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                             timeTxt.setText(hms);
-                            int progress = (i*100/(10000/1000)); //(3900000 - millisUntilFinished) / 65000
+                            int progress = (i*100/(3900000/1000)); //(3900000 - millisUntilFinished) / 65000
                             progressBar.setProgress(progress);
                             remainingTime = millisUntilFinished;
 
@@ -128,7 +133,7 @@ public class ReadingActivity extends AppCompatActivity {
 
                     if (startClickCount%2 == 1){
 
-                        startButton.setText("Restart");
+                        startButton.setText("Reset");
                         stopButton.setEnabled(true);
 
                     }
@@ -188,13 +193,15 @@ public class ReadingActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReadingActivity.this);
                 alertDialogBuilder
-                        .setMessage("Are you sure you want to move to the next section")
+                        .setMessage("Are you sure you want to skip to the break?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                isPaused = true;
                                 if (textView.getText() == "") {
                                     Intent intent = new Intent(ReadingActivity.this, SatBreak1.class);
                                     startActivity(intent);
@@ -218,21 +225,72 @@ public class ReadingActivity extends AppCompatActivity {
 
     public void playAlarm(){
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.wdta);
+        final String string = getIntent().getStringExtra("noessay");
+        final MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.alarmsound);
 
-            mediaPlayer.start();
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReadingActivity.this);
-            alertDialogBuilder
-                    .setMessage("Time's Up!")
-                    .setCancelable(false)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mediaPlayer.stop();
-                            dialog.cancel();
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                mediaPlayer.stop();
+            }
+        };
+//Task for timer to execute when time expires
+        class SleepTask extends TimerTask {
+            @Override
+            public void run(){
+                handler.sendEmptyMessage(0);
+            }
+        }
+
+        Timer timer = new Timer("timer",true);
+        timer.schedule(new SleepTask(),10000);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReadingActivity.this);
+        alertDialogBuilder
+                .setMessage("Time's Up! Take a break!")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (textView.getText() == "") {
+                            Intent intent = new Intent(ReadingActivity.this, SatBreak1.class);
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(ReadingActivity.this, SatBreak1.class);
+                            intent.putExtra("noessay", string);
+                            startActivity(intent);
                         }
-                    });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+                        mediaPlayer.stop();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReadingActivity.this);
+        alertDialogBuilder
+                .setMessage("Do you want to quit the test?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        isPaused = true;
+                        Intent intent = new Intent(ReadingActivity.this, HomePage.class);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

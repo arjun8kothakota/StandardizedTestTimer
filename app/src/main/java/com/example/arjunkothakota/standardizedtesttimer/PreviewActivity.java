@@ -217,9 +217,6 @@ public class PreviewActivity extends AppCompatActivity {
                 }
             });
 
-        }else{
-            Intent intent = new Intent(PreviewActivity.this, TestsActivity.class);
-            startActivity(intent);
         }
     }
 }
