@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import com.example.arjunkothakota.standardizedtesttimer.PreviewActivity;
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
-public class SatFragment extends Fragment implements View.OnClickListener {
+public class SatFragment extends Fragment{
 
     ImageButton satBtn;
 
@@ -34,10 +34,5 @@ public class SatFragment extends Fragment implements View.OnClickListener {
         });
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

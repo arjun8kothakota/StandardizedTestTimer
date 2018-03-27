@@ -1,12 +1,11 @@
 package com.example.arjunkothakota.standardizedtesttimer.Home;
 
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.arjunkothakota.standardizedtesttimer.R;
 
@@ -23,8 +22,6 @@ public class HomePage extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        mTabLayout.setVisibility(View.GONE);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

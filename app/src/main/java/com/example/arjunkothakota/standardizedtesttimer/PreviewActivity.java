@@ -155,6 +155,9 @@ public class PreviewActivity extends AppCompatActivity {
             section4Time.setText("35 min");
             section5Time.setText("40 min");
 
+            essayButton.setText("With Writing");
+            noEssayButton.setText("Without Writing");
+
 
             essayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
